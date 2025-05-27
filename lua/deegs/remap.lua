@@ -18,6 +18,10 @@ vim.keymap.set("n", "<leader><leader>", function()
 end)
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 
+vim.keymap.set('n', '<leader>td', function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { silent = true, noremap = true })
+
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -46,6 +50,14 @@ vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<leader>f", function()
     require("conform").format({ bufnr = 0 })
 end)
+
+-- reload neovim config and lsp
+vim.keymap.set('n', '<leader>rr', function()
+  dofile(vim.env.MYVIMRC)
+  vim.cmd('LspRestart')
+end)
+
+
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")

@@ -66,6 +66,31 @@ return {
 					})
 			})
 
+            cmp.setup.cmdline('/', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = 'buffer' }
+                }
+            })
+
+            cmp.setup.cmdline(':', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = cmp.config.sources(
+                    {
+                        { name = 'path' }
+                    },
+                    {
+                        {
+
+                            name = 'cmdline',
+                            option = {
+                                ignore_cmds = { 'Man', '!' }
+                            }
+                        }
+                    }
+                )
+            })
+
 			vim.diagnostic.config({
 				-- update_in_insert = true,
 				float = {
@@ -77,6 +102,7 @@ return {
 					prefix = "",
 				},
 			})
+            vim.diagnostic.config({virtual_text = true})
 
 		end,
 	},

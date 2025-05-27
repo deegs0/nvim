@@ -4,7 +4,7 @@ require("deegs.lazy_init")
 require("deegs.harpoon")
 
 local augroup = vim.api.nvim_create_augroup
-local ThePrimeagenGroup = augroup('ThePrimeagen', {})
+local DeegsGroup = augroup('DeegsGroup', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
@@ -25,31 +25,20 @@ autocmd('TextYankPost', {
     callback = function()
         vim.highlight.on_yank({
             higroup = 'IncSearch',
-            timeout = 40,
+            timeout = 100,
         })
     end,
 })
 
 autocmd({"BufWritePre"}, {
-    group = ThePrimeagenGroup,
+    group = DeegsGroup,
     pattern = "*",
     command = [[%s/\s\+$//e]],
 })
 
-autocmd('BufEnter', {
-    group = ThePrimeagenGroup,
-    callback = function()
-        if vim.bo.filetype == "zig" then
-            vim.cmd.colorscheme("tokyonight-night")
-        else
-            vim.cmd.colorscheme("rose-pine-moon")
-        end
-    end
-})
-
 
 autocmd('LspAttach', {
-    group = ThePrimeagenGroup,
+    group = DeegsGroup,
     callback = function(e)
         local opts = { buffer = e.buf }
         vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
